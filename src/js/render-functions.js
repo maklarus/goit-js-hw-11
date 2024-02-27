@@ -4,9 +4,14 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const gallery = document.querySelector('.gallery');
+const instanse = new SimpleLightbox('.gallery a');
 
-export function renderImgs(data) {
-  const galleryTemplate = data
+export function renderImgs({ hits }) {
+  if (hits.length === 0) {
+    gallery.innerHTML = '';
+    return;
+  }
+  const galleryTemplate = hits
     .map(
       ({
         webformatURL,
@@ -22,21 +27,23 @@ export function renderImgs(data) {
         <a href="${largeImageURL}" class="gallery-link">
           <img src="${webformatURL}" alt="${tags}" />
         </a>
-        <div>
-          <p>Likes</p>
-          <p>${likes}</p>
-        </div>
-        <div>
-          <p>Views</p>
-          <p>${views}</p>
-        </div>
-        <div>
-          <p>Comments</p>
-          <p>${comments}</p>
-        </div>
-        <div>
-          <p>Downloads</p>
-          <p>${downloads}</p>
+        <div class="flex-style">
+          <div class="p-style">
+            <p class="p1">Likes</p>
+            <p class="p2">${likes}</p>
+          </div>
+          <div class="p-style">
+            <p class="p1">Views</p>
+            <p class="p2">${views}</p>
+          </div>
+          <div class="p-style">
+            <p class="p1">Comments</p>
+            <p class="p2">${comments}</p>
+          </div>
+          <div class="p-style">
+            <p class="p1">Downloads</p>
+            <p class="p2">${downloads}</p>
+          </div>
         </div>
       </li>`;
       }
@@ -44,6 +51,6 @@ export function renderImgs(data) {
     .join('');
 
   gallery.innerHTML = galleryTemplate;
-}
 
-new SimpleLightbox('.gallery a');
+  instanse.refresh();
+}

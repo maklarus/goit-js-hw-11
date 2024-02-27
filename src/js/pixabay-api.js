@@ -1,3 +1,7 @@
+// Описаний у документації
+import iziToast from 'izitoast';
+// Додатковий імпорт стилів
+
 import { renderImgs } from './render-functions';
 
 const API_URL = 'https://pixabay.com/api';
@@ -8,8 +12,40 @@ const searchParams = new URLSearchParams({
   safesearch: 'true',
 });
 
+const addLoader = () => {
+  const loader = document.querySelector('.loader');
+  loader.style.display = 'inline-block';
+};
+
 export const fetchImgs = searchValue => {
-  fetch(`${API_URL}/?key=${API_KEY}&q=${searchValue}&${searchParams}`)
-    .then(r => r.json())
-    .then(r => renderImgs(r.hits));
+  addLoader();
+  setTimeout(function () {
+    fetch(`${API_URL}/?key=${API_KEY}&q=${searchValue}&${searchParams}`)
+      .then(r => r.json())
+      .then(data => {
+        if (!data.hits.length) {
+          iziToast.error({
+            title: 'Error',
+            message:
+              'Sorry, there are no images matching your search query. Please try again!',
+            position: 'topRight',
+          });
+          return data;
+        } else {
+          return data;
+        }
+      })
+      .then(renderImgs)
+      .catch(error =>
+        iziToast.error({
+          title: 'Error',
+          message: `Bad request`,
+          position: 'topRight',
+        })
+      )
+      .finally(() => {
+        const loader = document.querySelector('.loader');
+        loader.style.display = 'none';
+      });
+  }, 250);
 };
