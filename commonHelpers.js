@@ -1,23 +1,25 @@
-import{S as l}from"./assets/vendor-874053e3.js";(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))n(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const s of t.addedNodes)s.tagName==="LINK"&&s.rel==="modulepreload"&&n(s)}).observe(document,{childList:!0,subtree:!0});function i(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function n(e){if(e.ep)return;e.ep=!0;const t=i(e);fetch(e.href,t)}})();const p=document.querySelector(".gallery");function u(o){const r=o.map(({webformatURL:i,largeImageURL:n,tags:e,likes:t,views:s,comments:c,downloads:a})=>`
+import{S as d,i as l}from"./assets/vendor-5b791d57.js";(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const o of r.addedNodes)o.tagName==="LINK"&&o.rel==="modulepreload"&&i(o)}).observe(document,{childList:!0,subtree:!0});function n(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function i(e){if(e.ep)return;e.ep=!0;const r=n(e);fetch(e.href,r)}})();const c=document.querySelector(".gallery"),f=new d(".gallery a");function m({hits:s}){if(s.length===0){c.innerHTML="";return}const t=s.map(({webformatURL:n,largeImageURL:i,tags:e,likes:r,views:o,comments:p,downloads:u})=>`
       <li class="gallery-item">
-        <a href="${n}" class="gallery-link">
-          <img src="${i}" alt="${e}" />
+        <a href="${i}" class="gallery-link">
+          <img src="${n}" alt="${e}" />
         </a>
-        <div>
-          <p>Likes</p>
-          <p>${t}</p>
+        <div class="flex-style">
+          <div class="p-style">
+            <p class="p1">Likes</p>
+            <p class="p2">${r}</p>
+          </div>
+          <div class="p-style">
+            <p class="p1">Views</p>
+            <p class="p2">${o}</p>
+          </div>
+          <div class="p-style">
+            <p class="p1">Comments</p>
+            <p class="p2">${p}</p>
+          </div>
+          <div class="p-style">
+            <p class="p1">Downloads</p>
+            <p class="p2">${u}</p>
+          </div>
         </div>
-        <div>
-          <p>Views</p>
-          <p>${s}</p>
-        </div>
-        <div>
-          <p>Comments</p>
-          <p>${c}</p>
-        </div>
-        <div>
-          <p>Downloads</p>
-          <p>${a}</p>
-        </div>
-      </li>`).join("");p.innerHTML=r}new l(".gallery a");const d="https://pixabay.com/api",f="42570593-7f6e60f401c84611dfc2b0674",m=new URLSearchParams({image_type:"photo",orientation:"horizontal",safesearch:"true"}),h=o=>{fetch(`${d}/?key=${f}&q=${o}&${m}`).then(r=>r.json()).then(r=>u(r.hits))},y=document.querySelector("form"),g=document.querySelector('input[name="search"]');function v(o){o.preventDefault(),h(g.value)}y.addEventListener("submit",v);
+      </li>`).join("");c.innerHTML=t,f.refresh()}const y="https://pixabay.com/api",h="42570593-7f6e60f401c84611dfc2b0674",g=new URLSearchParams({image_type:"photo",orientation:"horizontal",safesearch:"true"}),v=()=>{const s=document.querySelector(".loader");s.style.display="inline-block"},L=s=>{v(),setTimeout(function(){fetch(`${y}/?key=${h}&q=${s}&${g}`).then(t=>t.json()).then(t=>(t.hits.length||l.error({title:"Error",message:"Sorry, there are no images matching your search query. Please try again!",position:"topRight"}),t)).then(m).catch(t=>l.error({title:"Error",message:"Bad request",position:"topRight"})).finally(()=>{const t=document.querySelector(".loader");t.style.display="none"})},250)},$=document.querySelector("form"),a=document.querySelector('input[name="search"]');function P(s){if(s.preventDefault(),a.value.trim()===""){l.error({title:"Error",message:"Please enter text into the input field.",position:"topRight"});return}L(a.value.trim())}$.addEventListener("submit",P);
 //# sourceMappingURL=commonHelpers.js.map
